@@ -1,2 +1,2 @@
 # pydw
-Command-line download tool for Linux.
+Command-line interface based download tool for Linux.
