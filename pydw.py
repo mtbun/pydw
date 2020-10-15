@@ -35,7 +35,12 @@ def file_exists(file, directory):
         return False
 
 args = sys.argv
-
+if '--help' in args or '-h' in args:
+    print('\nKullanım:            Açıklama:')
+    print('    -l <dosya>           İndirilecek dosyaların listesi')
+    print('    -d <klasör>          İndirilecek konum')
+    print('\nversion: 0.0.4\n')
+    sys.exit()
 txt_file = args[args.index('-l') + 1]
 url_list = open(txt_file, 'r').read().split('\n')
 save_directory = args[args.index('-d') + 1]
