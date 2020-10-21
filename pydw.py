@@ -2,6 +2,7 @@
 import math
 import os
 import sys
+import time
 import requests
 
 
@@ -39,11 +40,19 @@ if '--help' in args or '-h' in args:
     print('\nKullanım:            Açıklama:')
     print('    -l <dosya>           İndirilecek dosyaların listesi')
     print('    -d <klasör>          İndirilecek konum')
+    print('    --delay [optional]   Gecikme')
     print('\nversion: 0.0.4\n')
     sys.exit()
+
 txt_file = args[args.index('-l') + 1]
 url_list = open(txt_file, 'r').read().split('\n')
 save_directory = args[args.index('-d') + 1]
+
+if '--delay' in args:
+    delay = args[args.index('--delay') + 1]
+    delay = float(delay)
+else:
+    delay = None
 
 dw, fail, passed, msg = 0, 0, 0, ''
 for url in url_list:
@@ -51,6 +60,10 @@ for url in url_list:
         filename = generate_filename(url)
         if (filename) and (not file_exists(filename, save_directory)):
             status = download(url, filename, save_directory)
+
+            if delay != None:
+                time.sleep(delay) 
+
             if status:
                 sys.stdout.write('\b' * len(msg))
                 dw += 1
@@ -63,10 +76,9 @@ for url in url_list:
             else:
                 fail += 1
         else:
-            passed += 1
+            passed += 1        
     except Exception as e:
         open('error.txt', 'a').write(url + '\n')
         fail += 1
 
 print('\n')
-
