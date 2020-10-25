@@ -38,15 +38,19 @@ def file_exists(file, directory):
 args = sys.argv
 if '--help' in args or '-h' in args:
     print('\nKullanım:            Açıklama:')
-    print('    -l <dosya>           İndirilecek dosyaların listesi')
-    print('    -d <klasör>          İndirilecek konum')
-    print('    --delay [optional]   Gecikme')
+    print('    -l <dosya>             İndirilecek dosyaların listesi')
+    print('    -d <klasör> [optional] İndirilecek konum')
+    print('    --delay [optional]     Gecikme')
     print('\nversion: 0.0.4\n')
     sys.exit()
 
 txt_file = args[args.index('-l') + 1]
 url_list = open(txt_file, 'r').read().split('\n')
-save_directory = args[args.index('-d') + 1]
+
+if '-d' in args:
+	save_directory = args[args.index('-d') + 1]
+else:
+	save_directory = './'
 
 if '--delay' in args:
     delay = args[args.index('--delay') + 1]
